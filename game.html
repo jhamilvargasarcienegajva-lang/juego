@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio Conductual - Juego</title>
+    <link rel="stylesheet" href="css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ✅ Header con botón Cambiar Avatar -->
+    <header class="game-header">
+        <div class="logo">🔬 Laboratorio Conductual</div>
+        <div class="player-info">
+            <span id="player-name">Investigador</span>
+            <span class="points">⭐ <span id="player-points">0</span></span>
+            
+            <!-- Botón Cambiar Avatar -->
+            <button onclick="cambiarAvatar()" class="btn-avatar" title="Seleccionar otro avatar">
+                🎭 Cambiar Avatar
+            </button>
+            
+            <button onclick="cerrarSesion()" class="btn-logout">Salir</button>
+        </div>
+    </header>
+
+    <!-- Pantalla 1: Selector de Personajes -->
+    <div id="screen-characters" class="screen">
+        <div class="screen-content">
+            <h2>🎮 Selecciona tu Avatar</h2>
+            <p>Elige el personaje que representará tu identidad en el laboratorio</p>
+            
+            <div class="characters-grid">
+                <div class="character-card" onclick="seleccionarPersonaje('cientifico')">
+                    <div class="character-emoji">👨‍🔬</div>
+                    <h3>El Científico</h3>
+                    <p>Especialista en análisis conductual</p>
+                    <div class="stats">
+                        <span>🧠 Inteligencia: +++</span>
+                        <span>⚡ Velocidad: ++</span>
+                    </div>
+                </div>
+                
+                <div class="character-card" onclick="seleccionarPersonaje('detective')">
+                    <div class="character-emoji">🕵️</div>
+                    <h3>El Detective</h3>
+                    <p>Experto en observar patrones</p>
+                    <div class="stats">
+                        <span>🧠 Inteligencia: ++</span>
+                        <span>⚡ Velocidad: +++</span>
+                    </div>
+                </div>
+                
+                <div class="character-card" onclick="seleccionarPersonaje('entrenador')">
+                    <div class="character-emoji">🎯</div>
+                    <h3>El Entrenador</h3>
+                    <p>Maestro del condicionamiento</p>
+                    <div class="stats">
+                        <span>🧠 Inteligencia: ++</span>
+                        <span>⚡ Velocidad: ++</span>
+                    </div>
+                </div>
+                
+                <div class="character-card" onclick="seleccionarPersonaje('robot')">
+                    <div class="character-emoji">🤖</div>
+                    <h3>El Robot</h3>
+                    <p>Análisis preciso de datos</p>
+                    <div class="stats">
+                        <span>🧠 Inteligencia: +++</span>
+                        <span>⚡ Velocidad: +</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla 2: Mapa de Niveles -->
+    <div id="screen-map" class="screen">
+        <div class="screen-content">
+            <h2>🗺️ Mapa de la Aventura</h2>
+            <p>Completa cada nivel para desbloquear el siguiente</p>
+            
+            <div class="levels-container">
+                <div class="level-card" id="level-1" onclick="iniciarNivel(1)">
+                    <div class="level-icon">📚</div>
+                    <h3>Nivel 1: Identificación</h3>
+                    <p>Reconoce las consecuencias conductuales</p>
+                    <div class="level-status">Disponible</div>
+                </div>
+                
+                <div class="level-card locked" id="level-2" onclick="iniciarNivel(2)">
+                    <div class="level-icon">🚗</div>
+                    <h3>Nivel 2: Aplicación</h3>
+                    <p>Camino Conductual con Auto</p>
+                    <div class="lock-overlay">🔒 Bloqueado</div>
+                </div>
+                
+                <div class="level-card locked" id="level-3" onclick="iniciarNivel(3)">
+                    <div class="level-icon">📊</div>
+                    <h3>Nivel 3: Programas</h3>
+                    <p>Programas de Reforzamiento</p>
+                    <div class="lock-overlay">🔒 Bloqueado</div>
+                </div>
+                
+                <div class="level-card locked" id="level-4" onclick="iniciarNivel(4)">
+                    <div class="level-icon">🏆</div>
+                    <h3>Nivel 4: Moldeamiento</h3>
+                    <p>Aproximaciones Sucesivas</p>
+                    <div class="lock-overlay">🔒 Bloqueado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla 3: Nivel 1 - Identificación -->
+    <div id="screen-level1" class="screen">
+        <div class="game-container">
+            <div class="level-header">
+                <h3>📚 Nivel 1: Identificación de Conductas</h3>
+                <div class="progress-info">
+                    Pregunta <span id="l1-current">1</span> de <span id="l1-total">5</span>
+                </div>
+            </div>
+            
+            <div class="scenario-box">
+                <div class="scenario-emoji" id="l1-emoji">📖</div>
+                <p id="l1-scenario">Un estudiante recibe un elogio después de estudiar</p>
+            </div>
+            
+            <div class="question-box">
+                <h4>¿Qué tipo de consecuencia es esta?</h4>
+                <div class="options" id="l1-options"></div>
+            </div>
+            
+            <div class="feedback" id="l1-feedback"></div>
+            
+            <button class="btn-back" onclick="volverAlMapa()">← Volver al Mapa</button>
+        </div>
+    </div>
+
+    <!-- Pantalla 4: Nivel 2 - Camino con Auto -->
+    <div id="screen-level2" class="screen">
+        <div class="game-container">
+            <div class="level-header">
+                <h3>🚗 Nivel 2: Camino Conductual</h3>
+                <div class="progress-info">
+                    Pregunta <span id="l2-current">1</span> de <span id="l2-total">5</span>
+                </div>
+            </div>
+            
+            <!-- Camino -->
+            <div class="road">
+                <div class="finish-line">🏁</div>
+                <div class="car" id="player-car">🚗</div>
+            </div>
+            
+            <!-- Barra de Conducta -->
+            <div class="behavior-bar">
+                <label>Probabilidad de Conducta</label>
+                <div class="bar-container">
+                    <div class="bar-fill" id="l2-behavior-bar"></div>
+                </div>
+                <span id="l2-behavior-percent">0%</span>
+            </div>
+            
+            <!-- Pregunta -->
+            <div class="question-box">
+                <h4 id="l2-scenario">El estudiante estudia 1 hora. ¿Qué aplicas?</h4>
+                <div class="options" id="l2-options"></div>
+            </div>
+            
+            <div class="feedback" id="l2-feedback"></div>
+            
+            <button class="btn-back" onclick="volverAlMapa()">← Volver al Mapa</button>
+        </div>
+    </div>
+
+    <!-- Pantalla 5: Nivel 3 - Programas de Reforzamiento -->
+    <div id="screen-level3" class="screen">
+        <div class="game-container">
+            <div class="level-header">
+                <h3>📊 Nivel 3: Programas de Reforzamiento</h3>
+                <div class="progress-info">
+                    Pregunta <span id="l3-current">1</span> de <span id="l3-total">4</span>
+                </div>
+            </div>
+            
+            <div class="program-display">
+                <div class="program-info">
+                    <h4 id="l3-program-name">Razón Fija</h4>
+                    <p id="l3-program-desc">Refuerzo después de un número fijo de respuestas</p>
+                </div>
+                <div class="graph-container">
+                    <div class="graph" id="l3-graph"></div>
+                    <p class="graph-label">Frecuencia de Conducta</p>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4 id="l3-question">¿Qué programa es este?</h4>
+                <div class="options" id="l3-options"></div>
+            </div>
+            
+            <div class="feedback" id="l3-feedback"></div>
+            
+            <button class="btn-back" onclick="volverAlMapa()">← Volver al Mapa</button>
+        </div>
+    </div>
+
+    <!-- Pantalla 6: Nivel 4 - Moldeamiento -->
+    <div id="screen-level4" class="screen">
+        <div class="game-container">
+            <div class="level-header">
+                <h3>🏆 Nivel 4: Moldeamiento Conductual</h3>
+                <div class="progress-info">
+                    Aproximación <span id="l4-current">1</span> de <span id="l4-total">5</span>
+                </div>
+            </div>
+            
+            <div class="shaping-display">
+                <div class="target-behavior">
+                    <h4>Conducta Meta:</h4>
+                    <p id="l4-target">Que el estudiante lea 30 minutos diarios</p>
+                </div>
+                
+                <div class="steps-container">
+                    <div class="step completed" id="step-1">1. Tomar el libro ✅</div>
+                    <div class="step current" id="step-2">2. Abrir el libro </div>
+                    <div class="step" id="step-3">3. Leer 5 min</div>
+                    <div class="step" id="step-4">4. Leer 15 min</div>
+                    <div class="step" id="step-5">5. Leer 30 min 🏆</div>
+                </div>
+                
+                <div class="avatar-display">
+                    <div class="avatar" id="l4-avatar">📚</div>
+                </div>
+            </div>
+            
+            <div class="question-box">
+                <h4 id="l4-question">¿Qué aproximación debes reforzar ahora?</h4>
+                <div class="options" id="l4-options"></div>
+            </div>
+            
+            <div class="feedback" id="l4-feedback"></div>
+            
+            <button class="btn-back" onclick="volverAlMapa()">← Volver al Mapa</button>
+        </div>
+    </div>
+
+    <!-- Pantalla 7: Resultados -->
+    <div id="screen-results" class="screen">
+        <div class="results-content">
+            <h2 id="result-title">¡Nivel Completado!</h2>
+            <div class="results-emoji" id="result-emoji">🎉</div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="result-points">0</div>
+                    <div class="stat-label">Puntos</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="result-accuracy">0%</div>
+                    <div class="stat-label">Precisión</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="result-time">0:00</div>
+                    <div class="stat-label">Tiempo</div>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="volverAlMapa()">Continuar</button>
+        </div>
+    </div>
+
+   <!-- Modal de Confirmación -->
+<div id="confirm-modal" class="confirm-modal" style="display: none;">
+    <div class="confirm-content">
+        <h3>🎭 ¿Cambiar Avatar?</h3>
+        <p>Si cambias de avatar, tu personaje actual será reemplazado. ¿Deseas continuar?</p>
+        <div class="confirm-buttons">
+            <button class="btn-confirm yes" onclick="confirmarCambioAvatar()">✅ Sí, cambiar</button>
+            <button class="btn-confirm no" onclick="cancelarCambioAvatar()">❌ Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio Conductual - Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="game-title">🔬 Laboratorio Conductual</h1>
+            <p class="subtitle">La Aventura Skinneriana</p>
+            
+            <div class="tabs">
+                <button class="tab active" id="tab-login" onclick="cambiarFormulario('login')">Iniciar Sesión</button>
+                <button class="tab" id="tab-register" onclick="cambiarFormulario('register')">Registrarse</button>
+            </div>
+            
+            <!-- Formulario Login -->
+            <div id="form-login" class="formulario active">
+                <form onsubmit="iniciarSesion(event)">
+                    <div class="input-group">
+                        <label>Usuario</label>
+                        <input type="text" id="login-user" required placeholder="tu@email.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="login-pass" required placeholder="••••••">
+                    </div>
+                    <button type="submit" class="btn-primary">ENTRAR AL LABORATORIO</button>
+                    <p class="error-message" id="login-error"></p>
+                </form>
+            </div>
+            
+            <!-- Formulario Registro -->
+            <div id="form-register" class="formulario">
+                <form onsubmit="registrarUsuario(event)">
+                    <div class="input-group">
+                        <label>Usuario</label>
+                        <input type="text" id="register-user" required placeholder="Elige un usuario">
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="register-pass" required placeholder="Mínimo 6 caracteres">
+                    </div>
+                    <div class="input-group">
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" id="register-confirm" required placeholder="Repite la contraseña">
+                    </div>
+                    <button type="submit" class="btn-primary">CREAR CUENTA</button>
+                    <p class="error-message" id="register-error"></p>
+                    <p class="success-message" id="register-success"></p>
+                </form>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3>Bienvenido Investigador</h3>
+            <p>En esta aventura aplicarás los principios del <strong>Condicionamiento Operante</strong> de B.F. Skinner.</p>
+            <ul>
+                <li>🎯 4 Niveles de Aventura</li>
+                <li>👤 Selector de Personajes</li>
+                <li>🏆 Sistema de Puntos</li>
+                <li>📊 Progreso Guardado</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="js/auth.js"></script>
+</body>
+</html>
